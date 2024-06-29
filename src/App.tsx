@@ -36,7 +36,7 @@ const App = () => {
         const arrayApiQuotes: Quote[] = Object.keys(data).map((key) => {
           return {
             ...data[key],
-            id: key
+            id: key,
           };
         });
 

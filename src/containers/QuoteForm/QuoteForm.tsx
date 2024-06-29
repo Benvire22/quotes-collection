@@ -68,16 +68,19 @@ const QuoteForm: React.FC<Props> = ({ request, categories }) => {
   return (
     <>
       <div className="row px-5 fs-5">
-        <h3 className="text-warning text-center fs-1 mb-5">Add Quote</h3>
+        <h3 className="text-warning text-center fs-1 mb-5">{id !== undefined ? 'Edit a quote' : 'Add Quote'}</h3>
         <div className="row mt-2 justify-content-center">
           <div className="col-10 text-primary-emphasis">
             <form onSubmit={onFormSubmit}>
               <div className="form-group mb-3">
                 <label htmlFor="category" className="fs-4 mb-2">Select Category</label>
-                <select className="form-select form-control border-primary fs-5 mb-3 py-2" name="category"
-                        value={formData.category} id="category"
-                        aria-label="Default select categories"
-                        onChange={changeQuote}>
+                <select
+                  className="form-select form-control border-primary fs-5 mb-3 py-2"
+                  name="category"
+                  value={formData.category} id="category"
+                  aria-label="Default select categories"
+                  onChange={changeQuote}
+                >
                   {categories.map(category => (
                     <option key={category.id} value={category.id}>{category.title}</option>
                   ))}
