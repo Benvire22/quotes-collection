@@ -16,7 +16,7 @@ interface Props {
 
 const QuoteForm: React.FC<Props> = ({ request, categories }) => {
   const [formData, setFormData] = useState<QuoteForm>({
-    category: 'humor',
+    category: 'star-wars',
     author: '',
     text: ''
   });
@@ -24,23 +24,21 @@ const QuoteForm: React.FC<Props> = ({ request, categories }) => {
   const { id } = useParams();
 
   if (id !== undefined) {
-  const request = useCallback(async () => {
-    const { data } = await axiosApi.get<QuoteApi>(`/quotes/${id}.json`);
+    const request = useCallback(async () => {
+      const { data } = await axiosApi.get<QuoteApi>(`/quotes/${id}.json`);
 
-    console.log(data);
+      console.log(data);
 
-    setFormData({
-      category: data.category,
-      author: data.author,
-      text: data.text,
-    });
-  }, [])
+      setFormData({
+        category: data.category,
+        author: data.author,
+        text: data.text
+      });
+    }, []);
 
-  useEffect(() => {
+    useEffect(() => {
       void request();
-  }, [request]);
-
-
+    }, [request]);
   }
 
   const changeQuote = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -74,18 +72,20 @@ const QuoteForm: React.FC<Props> = ({ request, categories }) => {
       <div className="row px-5 fs-5">
         <h3 className="text-warning text-center fs-1 mb-5">Add Quote</h3>
         <div className="row mt-2 justify-content-center">
-          <div className="col-8 text-primary-emphasis">
+          <div className="col-10 text-primary-emphasis">
             <form onSubmit={onFormSubmit}>
-              <div className="form-group">
+              <div className="form-group mb-3">
                 <label htmlFor="category" className="fs-4 mb-2">Select Category</label>
-                <select className="form-select" name="category" id="category" aria-label="Default select categories"
+                <select className="form-select form-control border-primary fs-5 mb-3 py-2" name="category"
+                        value={formData.category} id="category"
+                        aria-label="Default select categories"
                         onChange={changeQuote}>
                   {categories.map(category => (
                     <option key={category.id} value={category.id}>{category.title}</option>
                   ))}
                 </select>
               </div>
-              <div className="form-group">
+              <div className="form-group mb-3">
                 <label htmlFor="author" className="fs-4 mb-2">Author</label>
                 <input
                   id="author"
@@ -116,8 +116,7 @@ const QuoteForm: React.FC<Props> = ({ request, categories }) => {
         </div>
       </div>
     </>
-  )
-    ;
+  );
 };
 
 export default QuoteForm;

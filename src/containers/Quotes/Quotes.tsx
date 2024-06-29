@@ -13,8 +13,6 @@ interface Props {
 const Quotes: React.FC<Props> = ({quotes, onRemove, apiRequest, editQuote}) => {
   const params = useParams();
 
-  console.log(params.categoryId);
-
   useEffect(() => {
     if (apiRequest && params.categoryId) {
       void apiRequest(params.categoryId);

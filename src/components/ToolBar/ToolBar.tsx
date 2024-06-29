@@ -5,7 +5,7 @@ const ToolBar = () => {
     <>
       <nav className="navbar py-3 navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div className="container-xl">
-          <NavLink to="/" className="navbar-brand">
+          <NavLink to="/" className="navbar-brand fs-1 fst-italic">
             Logo
           </NavLink>
           <button
@@ -20,7 +20,7 @@ const ToolBar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto gap-4 fs-4">
               <li className="nav-item">
-                <NavLink to="/" className="nav-link" aria-current="page">Quotes</NavLink>
+                <NavLink to="/" className="nav-link border-end border-white pe-4 border-5" aria-current="page">Quotes</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink to="/add-quote" className="nav-link">Submit new quote</NavLink>
