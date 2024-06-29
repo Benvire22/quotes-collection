@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axiosApi from '../../axiosApi';
-import { useNavigate } from 'react-router-dom';
-import { Categories } from '../../types';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Categories, QuoteApi } from '../../types';
 
 interface QuoteForm {
   category: string;
@@ -11,7 +11,7 @@ interface QuoteForm {
 
 interface Props {
   request: () => Promise<void>;
-  categories: Categories[]
+  categories: Categories[];
 }
 
 const QuoteForm: React.FC<Props> = ({ request, categories }) => {
@@ -21,6 +21,27 @@ const QuoteForm: React.FC<Props> = ({ request, categories }) => {
     text: ''
   });
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  if (id !== undefined) {
+  const request = useCallback(async () => {
+    const { data } = await axiosApi.get<QuoteApi>(`/quotes/${id}.json`);
+
+    console.log(data);
+
+    setFormData({
+      category: data.category,
+      author: data.author,
+      text: data.text,
+    });
+  }, [])
+
+  useEffect(() => {
+      void request();
+  }, [request]);
+
+
+  }
 
   const changeQuote = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({
@@ -32,13 +53,18 @@ const QuoteForm: React.FC<Props> = ({ request, categories }) => {
   const onFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await axiosApi.post('/quotes.json', formData);
+    if (id) {
+      await axiosApi.put(`/quotes/${id}.json`, formData);
+    } else {
+      await axiosApi.post('/quotes.json', formData);
+    }
 
     setFormData({
       category: 'humor',
       author: '',
       text: ''
     });
+
     await request();
     navigate('/');
   };
