@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const ToolBar = () => {
   return (
@@ -20,7 +20,8 @@ const ToolBar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto gap-4 fs-4">
               <li className="nav-item">
-                <NavLink to="/" className="nav-link border-end border-white pe-4 border-5" aria-current="page">Quotes</NavLink>
+                <NavLink to="/" className="nav-link border-end border-white pe-4 border-5"
+                         aria-current="page">Quotes</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink to="/add-quote" className="nav-link">Submit new quote</NavLink>

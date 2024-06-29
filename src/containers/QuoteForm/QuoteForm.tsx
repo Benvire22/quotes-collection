@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import axiosApi from '../../axiosApi';
 import { useNavigate, useParams } from 'react-router-dom';
+import axiosApi from '../../axiosApi';
 import { Categories, QuoteApi } from '../../types';
 
 interface QuoteForm {
@@ -26,8 +26,6 @@ const QuoteForm: React.FC<Props> = ({ request, categories }) => {
   if (id !== undefined) {
     const request = useCallback(async () => {
       const { data } = await axiosApi.get<QuoteApi>(`/quotes/${id}.json`);
-
-      console.log(data);
 
       setFormData({
         category: data.category,

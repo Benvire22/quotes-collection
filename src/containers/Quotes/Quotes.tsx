@@ -10,7 +10,7 @@ interface Props {
   editQuote: (id: string) => void;
 }
 
-const Quotes: React.FC<Props> = ({quotes, onRemove, apiRequest, editQuote}) => {
+const Quotes: React.FC<Props> = ({ quotes, onRemove, apiRequest, editQuote }) => {
   const params = useParams();
 
   useEffect(() => {

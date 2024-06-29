@@ -6,10 +6,10 @@ import QuoteForm from './containers/QuoteForm/QuoteForm';
 import ToolBar from './components/ToolBar/ToolBar';
 import Quotes from './containers/Quotes/Quotes';
 import NotFound from './containers/NotFound/NotFound';
-import './App.css';
 import handleError from './lib/handleError';
 import Spinner from './components/Spinner/Spinner';
 import Error from './components/Error/Error';
+import './App.css';
 
 const categories: Categories[] = [
   { title: 'Star Wars', id: 'star-wars' },
@@ -24,7 +24,6 @@ const App = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-
 
   const apiRequest = useCallback(async (category: string | null = null) => {
     try {
@@ -64,7 +63,7 @@ const App = () => {
       void apiRequest();
     } catch (e) {
       handleError(e as Error);
-      setIsError(true)
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }

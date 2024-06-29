@@ -7,7 +7,7 @@ interface Props {
   onChange: () => void;
 }
 
-const QuoteItem: React.FC<Props> = ({quote, onClick, onChange}) => {
+const QuoteItem: React.FC<Props> = ({ quote, onClick, onChange }) => {
   return (
     <div className="border rounded p-4 border-primary mb-4">
       <h4 className="text-primary fs-2">{quote.author}</h4>
