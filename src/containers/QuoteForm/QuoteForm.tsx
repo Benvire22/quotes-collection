@@ -1,34 +1,46 @@
 import React, { useState } from 'react';
+import axiosApi from '../../axiosApi';
+import { useNavigate } from 'react-router-dom';
+import { Categories } from '../../types';
 
-interface UserForm {
+interface QuoteForm {
   category: string;
   author: string;
   text: string;
 }
 
-const QuoteForm = () => {
-  const [formData, setFormData] = useState<UserForm>({
+interface Props {
+  request: () => Promise<void>;
+  categories: Categories[]
+}
+
+const QuoteForm: React.FC<Props> = ({ request, categories }) => {
+  const [formData, setFormData] = useState<QuoteForm>({
     category: 'humor',
     author: '',
     text: ''
   });
+  const navigate = useNavigate();
 
-  const changeUser = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const changeQuote = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value
     }));
   };
 
-  const onFormSubmit = (e: React.FormEvent) => {
+  const onFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+
+    await axiosApi.post('/quotes.json', formData);
 
     setFormData({
       category: 'humor',
       author: '',
       text: ''
     });
+    await request();
+    navigate('/');
   };
 
   return (
@@ -41,10 +53,10 @@ const QuoteForm = () => {
               <div className="form-group">
                 <label htmlFor="category" className="fs-4 mb-2">Select Category</label>
                 <select className="form-select" name="category" id="category" aria-label="Default select categories"
-                        onChange={changeUser}>
-                  <option value="humor">Humor</option>
-                  <option value="star-wars">Star wars</option>
-                  <option value="saying">Saying</option>
+                        onChange={changeQuote}>
+                  {categories.map(category => (
+                    <option key={category.id} value={category.id}>{category.title}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">
@@ -55,7 +67,7 @@ const QuoteForm = () => {
                   name="author"
                   className="form-control border-primary fs-5 mb-3 py-2"
                   value={formData.author}
-                  onChange={changeUser}
+                  onChange={changeQuote}
                   required
                 />
               </div>
@@ -66,7 +78,7 @@ const QuoteForm = () => {
                   name="text"
                   className="form-control border-primary fs-5 mb-4 py-2"
                   value={formData.text}
-                  onChange={changeUser}
+                  onChange={changeQuote}
                   required
                 ></textarea>
               </div>
